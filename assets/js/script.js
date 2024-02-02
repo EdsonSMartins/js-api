@@ -1,5 +1,5 @@
 const API_KEY = "m1QabdCOpGsuw7e8T6uOcFcPehc";
-const API_URL = "https://ci-jshint.herokuapp.com/api"
+const API_URL = "https://ci-jshint.herokuapp.com/api";
 const resultsModal = new bootstrap.Modal(document.getElementById("resultsModal"));
 
 document.getElementById("status").addEventListener("click", e => getStatus(e));
@@ -10,11 +10,11 @@ async function postForm(e) {
     const form = new FormData(document.getElementById("checksform"));
 
     const response = await fetch(API_URL, {
-                                method: "POST",
-                                headers: {
-                                    "Authorization": API_KEY,
-                                },
-                                body: form,
+        method: "POST",
+        headers: {
+            "Authorization": API_KEY,
+        },
+        body: form,
     });
 
     const data = await response.json();
@@ -25,10 +25,10 @@ async function postForm(e) {
         throw new Error(data.error);
     }
 
-
 }
 
 async function getStatus(e) {
+
     const queryString = `${API_URL}?api_key=${API_KEY}`;
 
     const response = await fetch(queryString);
@@ -38,8 +38,9 @@ async function getStatus(e) {
     if (response.ok) {
         displayStatus(data);
     } else {
-        throw newError(data.error);
+        throw new Error(data.error);
     }
+
 }
 
 function displayErrors(data) {
@@ -65,12 +66,12 @@ function displayErrors(data) {
 
 function displayStatus(data) {
 
-    let heading = "API KEY Status";
-    let results = `<div>your key is valid until</div>`;
+    let heading = "API Key Status";
+    let results = `<div>Your key is valid until</div>`;
     results += `<div class="key-status">${data.expiry}</div>`;
 
     document.getElementById("resultsModalTitle").innerText = heading;
     document.getElementById("results-content").innerHTML = results;
-
     resultsModal.show();
+
 }
